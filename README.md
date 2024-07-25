@@ -1,6 +1,8 @@
 # sc-grad-2025
 
-The technical take home for SC graduate program of 2025.
+The technical assessment for SafetyCulture graduate program of 2025.
+
+**Please note the explanation for component 2 is at the end of the README.md!**
 
 ## Getting started
 
@@ -68,11 +70,17 @@ To run the code on your local machine
   { data: [9, 10], token: "" }
 ```
 
-## Submission
+## Explanation for Component 2
 
-Create a repo in your chosen git repository (make sure it is public so we can access it) and reply with the link to your code. We recommend using GitHub.
+To implement the Pagination for our code, I did the following modifications:
 
-
-## Contact
-
-If you have any questions feel free to contact us at: graduates@safetyculture.io
+1. **Changed the request and response structures**
+  * Ensure the resquest contains the token (represents the page number) so that our code knows the start index (where to begin scanning the folders) and also the page size so that our code knows how many folders should one single page contains.
+  * Ensure the response has the folder list and the token for the next scan so that our code knows what page number will be used in the next iteration.
+2. **Token Encryption/Decryption**
+  * Simply encode the page numbers in integer format to base64 string to create unique tokens.
+  * And decode the tokens to get the current page number.
+3. **Data Extraction for the current page**
+  * Caculate the start and end indices based on the page number (token) and the page size to know which subset of folders will be extracted.
+4. **Token Generation**
+  * Then generate the next token if there are more folders (pages) to be retrieved, the user uses the next token to request the subsequent page, continuing until no more data is available.
