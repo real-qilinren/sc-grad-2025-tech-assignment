@@ -58,4 +58,18 @@ func Test_GetAllFolders(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Len(t, res.Folders, 0)
 	})
+
+	t.Run("boundary case - empty orgID string", func(t *testing.T) {
+		emptyOrgID, err := uuid.FromString("")
+		assert.Error(t, err)
+
+		req := &folders.FetchFolderRequest{
+			OrgID: emptyOrgID,
+		}
+
+		res, err := folders.GetAllFolders(req, mockFetcher)
+
+		assert.Nil(t, err)
+		assert.Len(t, res.Folders, 0)
+	})
 }
